@@ -1,0 +1,5285 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Дала мұрасы — Қазақ халқының интерактивті мұрасы</title>
+
+<meta name="description"
+      content="Қазақ халқының тарихы, мәдениеті, дәстүрі, ұлттық символдары және интерактивті ойындары туралы заманауи сайт.">
+
+<style>
+/* =========================================================
+   RESET
+========================================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:
+        Inter,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    background:#07111f;
+    color:#f5f0e6;
+    overflow-x:hidden;
+    transition:
+        background .4s ease,
+        color .4s ease;
+}
+
+button,
+input{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+a{
+    color:inherit;
+    text-decoration:none;
+}
+
+/* =========================================================
+   THEME
+========================================================= */
+
+body.light{
+    background:#f5efe3;
+    color:#241d14;
+}
+
+body.light .glass{
+    background:rgba(255,255,255,.72);
+    border-color:rgba(90,60,20,.15);
+}
+
+body.light .muted{
+    color:#665b4c;
+}
+
+body.light .section-title{
+    color:#241d14;
+}
+
+body.light .nav{
+    background:rgba(250,245,235,.82);
+}
+
+body.light .nav-link{
+    color:#3e3326;
+}
+
+body.light .hero{
+    background:
+        radial-gradient(circle at 50% 25%,rgba(230,184,92,.35),transparent 30%),
+        linear-gradient(#dceaf2,#f4ead8);
+}
+
+body.light .hero::after{
+    background:linear-gradient(transparent,#f5efe3);
+}
+
+/* =========================================================
+   VARIABLES
+========================================================= */
+
+:root{
+    --gold:#dcae58;
+    --gold2:#f0cf82;
+    --brown:#8b5e34;
+    --green:#326b55;
+    --blue:#163b61;
+
+    --bg:#07111f;
+    --card:rgba(15,28,46,.72);
+    --border:rgba(255,255,255,.1);
+
+    --shadow:
+        0 20px 60px rgba(0,0,0,.35);
+}
+
+/* =========================================================
+   SCROLL PROGRESS
+========================================================= */
+
+#progress{
+    position:fixed;
+    top:0;
+    left:0;
+    width:0%;
+    height:4px;
+    background:
+        linear-gradient(
+            90deg,
+            #dcae58,
+            #f4d58b,
+            #78b89b
+        );
+    z-index:9999;
+}
+
+/* =========================================================
+   BACKGROUND
+========================================================= */
+
+#particles{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:-1;
+    opacity:.5;
+}
+
+.cursor-glow{
+    position:fixed;
+    width:380px;
+    height:380px;
+    border-radius:50%;
+    pointer-events:none;
+    z-index:-1;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(220,174,88,.10),
+            transparent 70%
+        );
+
+    transform:
+        translate(
+            calc(var(--mouse-x,50vw) - 50%),
+            calc(var(--mouse-y,50vh) - 50%)
+        );
+}
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.nav{
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+
+    height:76px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:0 5%;
+
+    background:rgba(5,14,25,.72);
+    backdrop-filter:blur(18px);
+
+    border-bottom:1px solid rgba(255,255,255,.08);
+
+    z-index:1000;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    font-size:20px;
+    font-weight:900;
+    letter-spacing:.5px;
+}
+
+.logo-mark{
+    width:42px;
+    height:42px;
+
+    display:grid;
+    place-items:center;
+
+    border-radius:13px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--gold),
+            #8b5e34
+        );
+
+    color:#111;
+
+    box-shadow:
+        0 8px 30px rgba(220,174,88,.25);
+}
+
+.nav-links{
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.nav-link{
+    border:0;
+    background:transparent;
+    color:#cdd7e3;
+
+    padding:10px 14px;
+    border-radius:12px;
+
+    transition:.25s;
+}
+
+.nav-link:hover,
+.nav-link.active{
+    background:rgba(220,174,88,.12);
+    color:var(--gold2);
+}
+
+.nav-actions{
+    display:flex;
+    gap:7px;
+}
+
+.icon-btn{
+    width:42px;
+    height:42px;
+
+    border:1px solid var(--border);
+    background:rgba(255,255,255,.04);
+    color:inherit;
+
+    border-radius:12px;
+
+    transition:.25s;
+}
+
+.icon-btn:hover{
+    transform:translateY(-2px);
+    border-color:rgba(220,174,88,.45);
+    background:rgba(220,174,88,.1);
+}
+
+.burger{
+    display:none;
+}
+
+/* =========================================================
+   PAGE SYSTEM
+========================================================= */
+
+.page{
+    display:none;
+    min-height:100vh;
+    padding-top:76px;
+}
+
+.page.active{
+    display:block;
+}
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero{
+    position:relative;
+    min-height:calc(100vh - 76px);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    overflow:hidden;
+
+    background:
+        radial-gradient(
+            circle at 50% 20%,
+            rgba(220,174,88,.2),
+            transparent 28%
+        ),
+        linear-gradient(
+            180deg,
+            #07182c 0%,
+            #0a1c31 45%,
+            #0b251f 100%
+        );
+}
+
+.hero-content{
+    width:min(1100px,90%);
+    text-align:center;
+    position:relative;
+    z-index:5;
+}
+
+.badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+
+    padding:9px 14px;
+
+    border-radius:999px;
+
+    background:rgba(220,174,88,.1);
+    border:1px solid rgba(220,174,88,.25);
+
+    color:var(--gold2);
+
+    margin-bottom:20px;
+}
+
+.hero h1{
+    font-size:clamp(48px,9vw,110px);
+    line-height:.95;
+    font-weight:1000;
+
+    background:
+        linear-gradient(
+            120deg,
+            #fff,
+            #f0cf82,
+            #b88645
+        );
+
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+
+    letter-spacing:-4px;
+}
+
+.hero h2{
+    margin-top:20px;
+    font-size:clamp(18px,3vw,30px);
+    color:#d7e1eb;
+}
+
+.hero p{
+    max-width:700px;
+    margin:22px auto 30px;
+    line-height:1.7;
+    color:#9eafc1;
+}
+
+.hero-buttons{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:12px;
+}
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.btn{
+    border:0;
+    border-radius:14px;
+
+    padding:14px 20px;
+
+    font-weight:800;
+
+    transition:
+        transform .25s,
+        box-shadow .25s,
+        background .25s;
+}
+
+.btn:hover{
+    transform:translateY(-3px);
+}
+
+.btn-primary{
+    color:#15110b;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f2d58f,
+            #c38c43
+        );
+
+    box-shadow:
+        0 12px 35px rgba(220,174,88,.25);
+}
+
+.btn-secondary{
+    color:inherit;
+
+    background:rgba(255,255,255,.05);
+    border:1px solid var(--border);
+}
+
+.btn-danger{
+    background:#7c3030;
+    color:white;
+}
+
+/* =========================================================
+   HERO LANDSCAPE
+========================================================= */
+
+.sun{
+    position:absolute;
+
+    width:150px;
+    height:150px;
+
+    border-radius:50%;
+
+    top:13%;
+    right:16%;
+
+    background:
+        radial-gradient(
+            circle,
+            #fff4c4,
+            #e7b95e 55%,
+            transparent 70%
+        );
+
+    filter:
+        drop-shadow(
+            0 0 50px rgba(240,207,130,.4)
+        );
+
+    animation:
+        floatSun 7s ease-in-out infinite;
+}
+
+@keyframes floatSun{
+    50%{
+        transform:translateY(-15px);
+    }
+}
+
+.mountains{
+    position:absolute;
+    bottom:0;
+    left:0;
+    width:100%;
+    height:42%;
+}
+
+.mountain{
+    position:absolute;
+    bottom:0;
+
+    width:0;
+    height:0;
+
+    border-left:220px solid transparent;
+    border-right:220px solid transparent;
+    border-bottom:340px solid #0b2925;
+
+    opacity:.9;
+}
+
+.mountain:nth-child(1){
+    left:-100px;
+}
+
+.mountain:nth-child(2){
+    left:25%;
+    transform:scale(1.2);
+    border-bottom-color:#0c302a;
+}
+
+.mountain:nth-child(3){
+    right:-80px;
+    transform:scale(1.1);
+    border-bottom-color:#0a241f;
+}
+
+.yurt{
+    position:absolute;
+
+    left:50%;
+    bottom:12%;
+
+    width:190px;
+    height:110px;
+
+    transform:translateX(-50%);
+
+    background:
+        radial-gradient(
+            ellipse,
+            #e9d7ad,
+            #b99762
+        );
+
+    border-radius:
+        50% 50% 20px 20px;
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.45);
+
+    animation:
+        yurtFloat 5s ease-in-out infinite;
+}
+
+.yurt::before{
+    content:"";
+    position:absolute;
+
+    left:20px;
+    right:20px;
+    top:-20px;
+
+    height:45px;
+
+    border-radius:50%;
+
+    background:#c49a5e;
+
+    border:7px solid #e7cf9e;
+}
+
+.yurt::after{
+    content:"☀";
+
+    position:absolute;
+
+    top:5px;
+    left:50%;
+
+    transform:translateX(-50%);
+
+    color:#fff0bd;
+    font-size:25px;
+}
+
+@keyframes yurtFloat{
+    50%{
+        transform:
+            translateX(-50%)
+            translateY(-8px);
+    }
+}
+
+/* =========================================================
+   SECTIONS
+========================================================= */
+
+.container{
+    width:min(1150px,90%);
+    margin:auto;
+}
+
+.section{
+    padding:90px 0;
+}
+
+.section-header{
+    margin-bottom:35px;
+}
+
+.eyebrow{
+    color:var(--gold);
+    text-transform:uppercase;
+    font-size:12px;
+    letter-spacing:2px;
+    font-weight:900;
+}
+
+.section-title{
+    margin-top:8px;
+    font-size:clamp(32px,5vw,56px);
+    line-height:1.05;
+}
+
+.section-desc{
+    max-width:700px;
+    color:#94a5b8;
+    line-height:1.7;
+    margin-top:15px;
+}
+
+/* =========================================================
+   GLASS
+========================================================= */
+
+.glass{
+    background:var(--card);
+    border:1px solid var(--border);
+
+    backdrop-filter:blur(18px);
+
+    border-radius:24px;
+
+    box-shadow:var(--shadow);
+}
+
+/* =========================================================
+   STATS
+========================================================= */
+
+.stats{
+    display:grid;
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:15px;
+}
+
+.stat{
+    padding:25px;
+    text-align:center;
+}
+
+.stat-number{
+    display:block;
+
+    font-size:34px;
+    font-weight:1000;
+
+    color:var(--gold2);
+}
+
+.stat-label{
+    color:#8fa0b1;
+    font-size:14px;
+}
+
+/* =========================================================
+   HISTORY
+========================================================= */
+
+.filters{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:25px;
+}
+
+.filter{
+    border:1px solid var(--border);
+    background:rgba(255,255,255,.04);
+    color:inherit;
+
+    padding:10px 14px;
+    border-radius:12px;
+}
+
+.filter.active{
+    background:rgba(220,174,88,.15);
+    color:var(--gold2);
+    border-color:rgba(220,174,88,.4);
+}
+
+.search{
+    width:100%;
+    padding:15px 17px;
+
+    border-radius:15px;
+
+    border:1px solid var(--border);
+    background:rgba(255,255,255,.04);
+    color:inherit;
+
+    outline:none;
+
+    margin-bottom:30px;
+}
+
+.search:focus{
+    border-color:rgba(220,174,88,.6);
+}
+
+.timeline{
+    position:relative;
+}
+
+.timeline::before{
+    content:"";
+
+    position:absolute;
+
+    left:50%;
+    top:0;
+    bottom:0;
+
+    width:2px;
+
+    background:
+        linear-gradient(
+            transparent,
+            var(--gold),
+            transparent
+        );
+
+    transform:translateX(-50%);
+}
+
+.event{
+    width:50%;
+    padding:15px 35px;
+
+    position:relative;
+}
+
+.event:nth-child(even){
+    margin-left:50%;
+}
+
+.event-dot{
+    position:absolute;
+
+    top:28px;
+
+    width:16px;
+    height:16px;
+
+    border-radius:50%;
+
+    background:var(--gold);
+
+    box-shadow:
+        0 0 0 6px rgba(220,174,88,.12);
+}
+
+.event:nth-child(odd) .event-dot{
+    right:-8px;
+}
+
+.event:nth-child(even) .event-dot{
+    left:-8px;
+}
+
+.event-card{
+    padding:25px;
+}
+
+.event-year{
+    color:var(--gold);
+    font-weight:900;
+    font-size:13px;
+}
+
+.event-card h3{
+    margin:8px 0;
+}
+
+.event-card p{
+    color:#98a7b7;
+    line-height:1.65;
+}
+
+/* =========================================================
+   CULTURE CARDS
+========================================================= */
+
+.cards{
+    display:grid;
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:18px;
+}
+
+.card{
+    padding:28px;
+
+    min-height:240px;
+
+    position:relative;
+    overflow:hidden;
+
+    transition:.3s;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+    border-color:rgba(220,174,88,.3);
+}
+
+.card-icon{
+    font-size:45px;
+    margin-bottom:15px;
+}
+
+.card h3{
+    margin-bottom:10px;
+}
+
+.card p{
+    color:#95a6b7;
+    line-height:1.6;
+}
+
+.card-more{
+    display:inline-block;
+
+    margin-top:20px;
+
+    color:var(--gold2);
+    font-weight:800;
+}
+
+/* =========================================================
+   SYMBOLS
+========================================================= */
+
+.symbol-grid{
+    display:grid;
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:16px;
+}
+
+.symbol{
+    padding:28px;
+    text-align:center;
+}
+
+.symbol-icon{
+    font-size:60px;
+    margin-bottom:15px;
+
+    filter:
+        drop-shadow(
+            0 10px 20px rgba(220,174,88,.2)
+        );
+}
+
+.symbol p{
+    color:#95a6b7;
+    margin-top:10px;
+    line-height:1.55;
+}
+
+/* =========================================================
+   ORNAMENT
+========================================================= */
+
+.ornament-layout{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:25px;
+}
+
+.ornament-controls{
+    padding:30px;
+}
+
+.control-row{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin:15px 0;
+}
+
+.color-input{
+    width:55px;
+    height:45px;
+
+    padding:2px;
+
+    border-radius:10px;
+    border:1px solid var(--border);
+    background:transparent;
+}
+
+canvas{
+    max-width:100%;
+    border-radius:20px;
+}
+
+.canvas-box{
+    padding:20px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+/* =========================================================
+   GAME
+========================================================= */
+
+.game-shell{
+    padding:25px;
+}
+
+.tabs{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+
+    margin-bottom:25px;
+}
+
+.tab-button{
+    border:1px solid var(--border);
+
+    background:rgba(255,255,255,.04);
+    color:inherit;
+
+    padding:12px 16px;
+
+    border-radius:12px;
+}
+
+.tab-button.active{
+    background:rgba(220,174,88,.15);
+    border-color:rgba(220,174,88,.45);
+    color:var(--gold2);
+}
+
+.tab{
+    display:none;
+}
+
+.tab.active{
+    display:block;
+}
+
+/* =========================================================
+   QUIZ
+========================================================= */
+
+.quiz-question{
+    font-size:25px;
+    font-weight:900;
+    margin-bottom:20px;
+}
+
+.answers{
+    display:grid;
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:12px;
+}
+
+.answer{
+    padding:18px;
+
+    text-align:left;
+
+    border:1px solid var(--border);
+    border-radius:15px;
+
+    background:rgba(255,255,255,.04);
+    color:inherit;
+
+    transition:.25s;
+}
+
+.answer:hover{
+    border-color:rgba(220,174,88,.4);
+    transform:translateY(-2px);
+}
+
+.answer.correct{
+    background:rgba(67,150,98,.2);
+    border-color:#62c887;
+}
+
+.answer.wrong{
+    background:rgba(180,70,70,.2);
+    border-color:#d76a6a;
+}
+
+.quiz-info{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+
+    margin-top:20px;
+}
+
+/* =========================================================
+   YURT GAME
+========================================================= */
+
+.yurt-game{
+    display:grid;
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:25px;
+}
+
+.yurt-preview{
+    min-height:330px;
+
+    display:grid;
+    place-items:center;
+
+    position:relative;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(220,174,88,.08),
+            transparent 65%
+        );
+}
+
+.build-yurt{
+    position:relative;
+
+    width:240px;
+    height:160px;
+}
+
+.yurt-part{
+    position:absolute;
+
+    left:50%;
+    transform:translateX(-50%);
+
+    opacity:0;
+
+    transition:.6s;
+}
+
+.yurt-part.show{
+    opacity:1;
+}
+
+/* kerege */
+
+.kerege{
+    bottom:0;
+
+    width:230px;
+    height:110px;
+
+    border:
+        7px solid #c89c60;
+
+    border-radius:
+        50% 50% 20px 20px;
+}
+
+/* uyk */
+
+.uyk{
+    bottom:70px;
+
+    width:210px;
+    height:100px;
+
+    border-top:
+        8px solid #dfc48f;
+
+    border-radius:50%;
+}
+
+/* shanyrak */
+
+.shanyrak{
+    top:5px;
+
+    width:70px;
+    height:70px;
+
+    border:
+        8px solid #e0bd78;
+
+    border-radius:50%;
+}
+
+.shanyrak::after{
+    content:"";
+
+    position:absolute;
+    inset:12px;
+
+    border:
+        3px solid #dcae58;
+
+    border-radius:50%;
+}
+
+.kiiz{
+    bottom:0;
+
+    width:235px;
+    height:105px;
+
+    background:
+        rgba(239,222,185,.75);
+
+    border-radius:
+        50% 50% 20px 20px;
+}
+
+.esik{
+    bottom:0;
+
+    width:55px;
+    height:90px;
+
+    background:#8b5e34;
+
+    border-radius:
+        12px 12px 0 0;
+}
+
+.parts{
+    display:grid;
+    gap:10px;
+}
+
+.part-btn{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    border:1px solid var(--border);
+    background:rgba(255,255,255,.04);
+    color:inherit;
+
+    padding:15px;
+    border-radius:13px;
+}
+
+.part-btn.selected{
+    background:rgba(220,174,88,.13);
+    border-color:rgba(220,174,88,.5);
+}
+
+/* =========================================================
+   DOMBRA
+========================================================= */
+
+.dombra{
+    padding:20px;
+    text-align:center;
+}
+
+.dombra-body{
+    position:relative;
+
+    width:min(500px,90%);
+    height:170px;
+
+    margin:30px auto;
+
+    display:flex;
+    align-items:center;
+}
+
+.neck{
+    height:25px;
+    flex:1;
+
+    background:
+        linear-gradient(
+            #b27b44,
+            #754a29
+        );
+
+    border-radius:10px;
+}
+
+.body-dombra{
+    width:170px;
+    height:130px;
+
+    background:
+        radial-gradient(
+            circle at 40% 35%,
+            #d49a57,
+            #754523
+        );
+
+    border-radius:
+        55% 45% 50% 50%;
+
+    position:relative;
+}
+
+.body-dombra::after{
+    content:"";
+
+    position:absolute;
+
+    width:45px;
+    height:45px;
+
+    border-radius:50%;
+
+    background:#26170d;
+
+    left:50%;
+    top:50%;
+
+    transform:translate(-50%,-50%);
+}
+
+.strings{
+    position:absolute;
+
+    left:15px;
+    right:15px;
+    top:50%;
+
+    display:flex;
+    justify-content:space-between;
+
+    transform:translateY(-50%);
+}
+
+.string{
+    width:2px;
+    height:160px;
+
+    background:#f0d8a5;
+
+    cursor:pointer;
+
+    transition:.15s;
+}
+
+.string:hover{
+    transform:scaleX(3);
+}
+
+/* =========================================================
+   ACHIEVEMENTS
+========================================================= */
+
+.achievements{
+    display:grid;
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:15px;
+
+    margin-top:25px;
+}
+
+.achievement{
+    padding:20px;
+
+    opacity:.45;
+
+    transition:.3s;
+}
+
+.achievement.unlocked{
+    opacity:1;
+
+    border-color:
+        rgba(220,174,88,.5);
+
+    box-shadow:
+        0 0 30px rgba(220,174,88,.08);
+}
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.modal{
+    position:fixed;
+    inset:0;
+
+    display:none;
+    align-items:center;
+    justify-content:center;
+
+    padding:20px;
+
+    background:rgba(0,0,0,.72);
+
+    backdrop-filter:blur(10px);
+
+    z-index:5000;
+}
+
+.modal.open{
+    display:flex;
+}
+
+.modal-box{
+    width:min(700px,100%);
+    max-height:90vh;
+    overflow:auto;
+
+    padding:30px;
+
+    border-radius:25px;
+
+    background:#0d1a2a;
+
+    border:1px solid var(--border);
+
+    box-shadow:
+        0 30px 100px rgba(0,0,0,.6);
+
+    animation:
+        modalIn .3s ease;
+}
+
+body.light .modal-box{
+    background:#fffaf0;
+}
+
+@keyframes modalIn{
+    from{
+        opacity:0;
+        transform:translateY(20px) scale(.97);
+    }
+
+    to{
+        opacity:1;
+        transform:none;
+    }
+}
+
+.modal-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    margin-bottom:20px;
+}
+
+.close{
+    width:40px;
+    height:40px;
+
+    border-radius:12px;
+
+    border:1px solid var(--border);
+    background:rgba(255,255,255,.05);
+    color:inherit;
+}
+
+.modal-content{
+    color:#a8b5c3;
+    line-height:1.8;
+}
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+#toastBox{
+    position:fixed;
+
+    right:20px;
+    bottom:20px;
+
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+
+    z-index:9000;
+}
+
+.toast{
+    min-width:260px;
+
+    padding:14px 17px;
+
+    border-radius:15px;
+
+    background:#101e30;
+    color:white;
+
+    border:1px solid rgba(255,255,255,.1);
+
+    box-shadow:
+        0 15px 40px rgba(0,0,0,.35);
+
+    animation:
+        toastIn .3s ease;
+}
+
+@keyframes toastIn{
+    from{
+        opacity:0;
+        transform:translateX(30px);
+    }
+
+    to{
+        opacity:1;
+        transform:none;
+    }
+}
+
+/* =========================================================
+   REVEAL
+========================================================= */
+
+.reveal{
+    opacity:0;
+    transform:translateY(25px);
+
+    transition:
+        opacity .7s ease,
+        transform .7s ease;
+}
+
+.reveal.in{
+    opacity:1;
+    transform:none;
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer{
+    padding:50px 0;
+
+    border-top:1px solid var(--border);
+
+    text-align:center;
+
+    color:#718195;
+}
+
+footer strong{
+    color:var(--gold);
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:900px){
+
+    .nav-links{
+        position:fixed;
+
+        top:76px;
+        left:0;
+        right:0;
+
+        display:none;
+        flex-direction:column;
+
+        padding:15px;
+
+        background:
+            rgba(5,14,25,.96);
+
+        border-bottom:
+            1px solid var(--border);
+    }
+
+    .nav-links.open{
+        display:flex;
+    }
+
+    .nav-link{
+        width:100%;
+        text-align:left;
+    }
+
+    .burger{
+        display:block;
+    }
+
+    .hide-m{
+        display:none;
+    }
+
+    .stats{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .cards{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .symbol-grid{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .ornament-layout,
+    .yurt-game{
+        grid-template-columns:1fr;
+    }
+
+    .timeline::before{
+        left:10px;
+    }
+
+    .event,
+    .event:nth-child(even){
+        width:100%;
+        margin-left:0;
+        padding-left:35px;
+    }
+
+    .event:nth-child(odd) .event-dot,
+    .event:nth-child(even) .event-dot{
+        left:2px;
+        right:auto;
+    }
+
+    .answers{
+        grid-template-columns:1fr;
+    }
+
+    .achievements{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:600px){
+
+    .nav{
+        padding:0 4%;
+    }
+
+    .logo span:last-child{
+        display:none;
+    }
+
+    .hero h1{
+        letter-spacing:-2px;
+    }
+
+    .hero-buttons{
+        flex-direction:column;
+    }
+
+    .hero-buttons .btn{
+        width:100%;
+    }
+
+    .cards{
+        grid-template-columns:1fr;
+    }
+
+    .symbol-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .section{
+        padding:65px 0;
+    }
+
+    .stats{
+        gap:10px;
+    }
+
+    .stat{
+        padding:18px 10px;
+    }
+
+    .stat-number{
+        font-size:27px;
+    }
+
+    .yurt{
+        transform:
+            translateX(-50%)
+            scale(.75);
+    }
+}
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media(prefers-reduced-motion:reduce){
+
+    *,
+    *::before,
+    *::after{
+        animation-duration:.01ms!important;
+        animation-iteration-count:1!important;
+        scroll-behavior:auto!important;
+        transition-duration:.01ms!important;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div id="progress"></div>
+<div class="cursor-glow"></div>
+<canvas id="particles"></canvas>
+
+<!-- ======================================================
+     NAVIGATION
+====================================================== -->
+
+<header class="nav">
+
+    <a href="#home" class="logo" data-route="home">
+
+        <div class="logo-mark">
+            ☀
+        </div>
+
+        <span>ДАЛА МҰРАСЫ</span>
+
+    </a>
+
+    <nav class="nav-links" id="navLinks">
+
+        <button class="nav-link active" data-route="home">
+            Басты бет
+        </button>
+
+        <button class="nav-link" data-route="history">
+            Тарих
+        </button>
+
+        <button class="nav-link" data-route="culture">
+            Мәдениет
+        </button>
+
+        <button class="nav-link" data-route="symbols">
+            Символдар
+        </button>
+
+        <button class="nav-link" data-route="game">
+            Ойын
+        </button>
+
+    </nav>
+
+    <div class="nav-actions">
+
+        <button
+            class="icon-btn hide-m"
+            id="musicBtn"
+            title="Музыка"
+        >
+            🔇
+        </button>
+
+        <button
+            class="icon-btn hide-m"
+            id="themeBtn"
+            title="Тақырып"
+        >
+            🌙
+        </button>
+
+        <button
+            class="icon-btn hide-m"
+            id="shareBtn"
+            title="Бөлісу"
+        >
+            ↗
+        </button>
+
+        <button
+            class="icon-btn"
+            id="burger"
+            title="Меню"
+        >
+            ☰
+        </button>
+
+    </div>
+
+</header>
+
+<!-- ======================================================
+     HOME
+====================================================== -->
+
+<main>
+
+<section
+    class="page active"
+    id="home"
+    data-page="home"
+>
+
+    <div class="hero">
+
+        <div class="sun"></div>
+
+        <div class="mountains">
+
+            <div class="mountain"></div>
+            <div class="mountain"></div>
+            <div class="mountain"></div>
+
+        </div>
+
+        <div class="yurt"></div>
+
+        <div class="hero-content">
+
+            <div class="badge">
+                ✦ ҰЛТТЫҚ МҰРА ✦
+            </div>
+
+            <h1>
+                ДАЛА<br>
+                МҰРАСЫ
+            </h1>
+
+            <h2>
+                Қазақ халқының тарихы мен мәдениетіне саяхат
+            </h2>
+
+            <p>
+                Ұлы даланың тарихын, салт-дәстүрін,
+                ұлттық символдарын және мәдени мұрасын
+                интерактивті түрде таны.
+            </p>
+
+            <div class="hero-buttons">
+
+                <button
+                    class="btn btn-primary"
+                    data-route="history"
+                >
+                    🏹 Саяхатты бастау
+                </button>
+
+                <button
+                    class="btn btn-secondary"
+                    id="factBtn"
+                >
+                    💡 Қызықты дерек
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <section class="section">
+
+        <div class="container">
+
+            <div class="stats reveal">
+
+                <div class="glass stat">
+                    <span class="stat-number">∞</span>
+                    <span class="stat-label">
+                        Ұрпақтан ұрпаққа
+                    </span>
+                </div>
+
+                <div class="glass stat">
+                    <span class="stat-number">1000+</span>
+                    <span class="stat-label">
+                        Дәстүр мен салт
+                    </span>
+                </div>
+
+                <div class="glass stat">
+                    <span class="stat-number">1465</span>
+                    <span class="stat-label">
+                        Қазақ хандығы
+                    </span>
+                </div>
+
+                <div class="glass stat">
+                    <span class="stat-number">∞</span>
+                    <span class="stat-label">
+                        Мәңгілік мұра
+                    </span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</section>
+
+<!-- ======================================================
+     HISTORY
+====================================================== -->
+
+<section
+    class="page"
+    id="history"
+    data-page="history"
+>
+
+    <div class="section">
+
+        <div class="container">
+
+            <div class="section-header reveal">
+
+                <div class="eyebrow">
+                    ТАРИХ
+                </div>
+
+                <h2 class="section-title">
+                    Ұлы дала тарихы
+                </h2>
+
+                <p class="section-desc">
+                    Ғасырлар бойы қалыптасқан қазақ
+                    мемлекеттілігінің маңызды кезеңдеріне
+                    саяхат жаса.
+                </p>
+
+            </div>
+
+            <div class="filters">
+
+                <button
+                    class="filter active"
+                    data-era="all"
+                >
+                    Барлығы
+                </button>
+
+                <button
+                    class="filter"
+                    data-era="ancient"
+                >
+                    Ежелгі дәуір
+                </button>
+
+                <button
+                    class="filter"
+                    data-era="middle"
+                >
+                    Орта ғасыр
+                </button>
+
+                <button
+                    class="filter"
+                    data-era="khanate"
+                >
+                    Қазақ хандығы
+                </button>
+
+                <button
+                    class="filter"
+                    data-era="modern"
+                >
+                    Қазіргі кезең
+                </button>
+
+            </div>
+
+            <input
+                class="search"
+                id="historySearch"
+                placeholder="🔎 Тарихтан іздеу..."
+            >
+
+            <div class="timeline" id="timeline">
+
+                <article
+                    class="event reveal"
+                    data-era="ancient"
+                    data-search="сақтар алтын адам б.з.д"
+                >
+
+                    <div class="event-dot"></div>
+
+                    <div class="glass event-card">
+
+                        <div class="event-year">
+                            Б.з.д. VIII–III ғғ.
+                        </div>
+
+                        <h3>
+                            🦅 Сақ дәуірі
+                        </h3>
+
+                        <p>
+                            Сақ тайпалары Ұлы даланың кең
+                            аумағында өмір сүріп, аң стилі
+                            өнерін жоғары деңгейге жеткізді.
+                        </p>
+
+                        <button
+                            class="card-more"
+                            data-modal="saka"
+                        >
+                            Толығырақ →
+                        </button>
+
+                    </div>
+
+                </article>
+
+                <article
+                    class="event reveal"
+                    data-era="ancient"
+                    data-search="ғұндар хунну моңғолия"
+                >
+
+                    <div class="event-dot"></div>
+
+                    <div class="glass event-card">
+
+                        <div class="event-year">
+                            Б.з.д. III ғ.
+                        </div>
+
+                        <h3>
+                            🐎 Ғұндар
+                        </h3>
+
+                        <p>
+                            Ғұндар Еуразия тарихында үлкен
+                            саяси және әскери рөл атқарған
+                            көшпелі өркениеттердің бірі болды.
+                        </p>
+
+                        <button
+                            class="card-more"
+                            data-modal="huns"
+                        >
+                            Толығырақ →
+                        </button>
+
+                    </div>
+
+                </article>
+
+                <article
+                    class="event reveal"
+                    data-era="middle"
+                    data-search="түркі қағанаты түрік көне"
+                >
+
+                    <div class="event-dot"></div>
+
+                    <div class="glass event-card">
+
+                        <div class="event-year">
+                            552 жыл
+                        </div>
+
+                        <h3>
+                            🏔️ Түрік қағанаты
+                        </h3>
+
+                        <p>
+                            552 жылы Түрік қағанаты құрылып,
+                            түркі халықтарының саяси тарихында
+                            жаңа дәуір басталды.
+                        </p>
+
+                        <button
+                            class="card-more"
+                            data-modal="turk"
+                        >
+                            Толығырақ →
+                        </button>
+
+                    </div>
+
+                </article>
+
+                <article
+                    class="event reveal"
+                    data-era="middle"
+                    data-search="қыпшақтар дала дешті қыпшақ"
+                >
+
+                    <div class="event-dot"></div>
+
+                    <div class="glass event-card">
+
+                        <div class="event-year">
+                            XI–XIII ғғ.
+                        </div>
+
+                        <h3>
+                            🐺 Қыпшақ даласы
+                        </h3>
+
+                        <p>
+                            Еуразия даласының үлкен бөлігі
+                            Дешті Қыпшақ атауымен белгілі
+                            тарихи кеңістікке айналды.
+                        </p>
+
+                    </div>
+
+                </article>
+
+                <article
+                    class="event reveal"
+                    data-era="khanate"
+                    data-search="қазақ хандығы керей жанібек 1465"
+                >
+
+                    <div class="event-dot"></div>
+
+                    <div class="glass event-card">
+
+                        <div class="event-year">
+                            1465–1466 жж.
+                        </div>
+
+                        <h3>
+                            👑 Қазақ хандығы
+                        </h3>
+
+                        <p>
+                            Керей мен Жәнібек сұлтандардың
+                            бастауымен Қазақ хандығының
+                            қалыптасу кезеңі басталды.
+                        </p>
+
+                        <button
+                            class="card-more"
+                            data-modal="khanate"
+                        >
+                            Толығырақ →
+                        </button>
+
+                    </div>
+
+                </article>
+
+                <article
+                    class="event reveal"
+                    data-era="modern"
+                    data-search="тәуелсіздік қазақстан 1991"
+                >
+
+                    <div class="event-dot"></div>
+
+                    <div class="glass event-card">
+
+                        <div class="event-year">
+                            1991 жыл
+                        </div>
+
+                        <h3>
+                            🇰🇿 Тәуелсіз Қазақстан
+                        </h3>
+
+                        <p>
+                            Қазақстан тәуелсіз мемлекет ретінде
+                            өз даму жолын бастады.
+                        </p>
+
+                        <button
+                            class="card-more"
+                            data-modal="independence"
+                        >
+                            Толығырақ →
+                        </button>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ======================================================
+     CULTURE
+====================================================== -->
+
+<section
+    class="page"
+    id="culture"
+    data-page="culture"
+>
+
+    <div class="section">
+
+        <div class="container">
+
+            <div class="section-header reveal">
+
+                <div class="eyebrow">
+                    МӘДЕНИЕТ
+                </div>
+
+                <h2 class="section-title">
+                    Дәстүр мен рух
+                </h2>
+
+                <p class="section-desc">
+                    Қазақ мәдениетінің маңызды құндылықтарын
+                    интерактивті карточкалар арқылы таны.
+                </p>
+
+            </div>
+
+            <div class="cards">
+
+                <article class="glass card reveal">
+
+                    <div class="card-icon">
+                        🏠
+                    </div>
+
+                    <h3>
+                        Киіз үй
+                    </h3>
+
+                    <p>
+                        Көшпелі өмір салтына бейімделген,
+                        қазақ халқының дәстүрлі баспанасы.
+                    </p>
+
+                    <button
+                        class="card-more"
+                        data-modal="yurt"
+                    >
+                        Зерттеу →
+                    </button>
+
+                </article>
+
+                <article class="glass card reveal">
+
+                    <div class="card-icon">
+                        🎵
+                    </div>
+
+                    <h3>
+                        Домбыра
+                    </h3>
+
+                    <p>
+                        Қазақтың ұлттық музыкалық мәдениетінің
+                        ең танымал аспаптарының бірі.
+                    </p>
+
+                    <button
+                        class="card-more"
+                        data-modal="dombra"
+                    >
+                        Зерттеу →
+                    </button>
+
+                </article>
+
+                <article class="glass card reveal">
+
+                    <div class="card-icon">
+                        🦅
+                    </div>
+
+                    <h3>
+                        Қыран
+                    </h3>
+
+                    <p>
+                        Еркіндік, биіктік, батылдық және
+                        кең дала ұғымдарымен байланысты.
+                    </p>
+
+                    <button
+                        class="card-more"
+                        data-modal="eagle"
+                    >
+                        Зерттеу →
+                    </button>
+
+                </article>
+
+                <article class="glass card reveal">
+
+                    <div class="card-icon">
+                        🧵
+                    </div>
+
+                    <h3>
+                        Ою-өрнек
+                    </h3>
+
+                    <p>
+                        Ұлттық өнердегі символдық мағынасы
+                        бар дәстүрлі өрнектер жүйесі.
+                    </p>
+
+                    <button
+                        class="card-more"
+                        data-modal="ornament"
+                    >
+                        Зерттеу →
+                    </button>
+
+                </article>
+
+                <article class="glass card reveal">
+
+                    <div class="card-icon">
+                        🐎
+                    </div>
+
+                    <h3>
+                        Ат мәдениеті
+                    </h3>
+
+                    <p>
+                        Жылқы қазақтың тұрмысында,
+                        шаруашылығында және мәдениетінде
+                        ерекше орын алған.
+                    </p>
+
+                    <button
+                        class="card-more"
+                        data-modal="horse"
+                    >
+                        Зерттеу →
+                    </button>
+
+                </article>
+
+                <article class="glass card reveal">
+
+                    <div class="card-icon">
+                        🤝
+                    </div>
+
+                    <h3>
+                        Қонақжайлық
+                    </h3>
+
+                    <p>
+                        Үлкенді сыйлау, қонақты құрметтеу және
+                        өзара көмек қазақ қоғамының маңызды
+                        құндылықтарының бірі.
+                    </p>
+
+                    <button
+                        class="card-more"
+                        data-modal="hospitality"
+                    >
+                        Зерттеу →
+                    </button>
+
+                </article>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ======================================================
+     SYMBOLS
+====================================================== -->
+
+<section
+    class="page"
+    id="symbols"
+    data-page="symbols"
+>
+
+    <div class="section">
+
+        <div class="container">
+
+            <div class="section-header reveal">
+
+                <div class="eyebrow">
+                    РӘМІЗДЕР
+                </div>
+
+                <h2 class="section-title">
+                    Ұлттық символдар
+                </h2>
+
+                <p class="section-desc">
+                    Қазақ дүниетанымында ерекше орын алатын
+                    символдар мен олардың мағыналары.
+                </p>
+
+            </div>
+
+            <div class="symbol-grid">
+
+                <article class="glass symbol reveal">
+
+                    <div class="symbol-icon">
+                        ☀️
+                    </div>
+
+                    <h3>
+                        Күн
+                    </h3>
+
+                    <p>
+                        Өмір, жылу, энергия және болашақтың
+                        символы.
+                    </p>
+
+                </article>
+
+                <article class="glass symbol reveal">
+
+                    <div class="symbol-icon">
+                        🦅
+                    </div>
+
+                    <h3>
+                        Қыран
+                    </h3>
+
+                    <p>
+                        Еркіндік пен биік мақсатты білдіреді.
+                    </p>
+
+                </article>
+
+                <article class="glass symbol reveal">
+
+                    <div class="symbol-icon">
+                        🏠
+                    </div>
+
+                    <h3>
+                        Шаңырақ
+                    </h3>
+
+                    <p>
+                        Отбасы, бірлік және ортақ үй ұғымының
+                        маңызды белгісі.
+                    </p>
+
+                </article>
+
+                <article class="glass symbol reveal">
+
+                    <div class="symbol-icon">
+                        🐎
+                    </div>
+
+                    <h3>
+                        Жылқы
+                    </h3>
+
+                    <p>
+                        Қозғалыс, еркіндік және дала өмірімен
+                        тығыз байланысты.
+                    </p>
+
+                </article>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="section">
+
+        <div class="container">
+
+            <div class="section-header">
+
+                <div class="eyebrow">
+                    ШЫҒАРМАШЫЛЫҚ
+                </div>
+
+                <h2 class="section-title">
+                    Ою генераторы
+                </h2>
+
+                <p class="section-desc">
+                    Өз ою-өрнегіңді жаса және PNG форматында
+                    сақта.
+                </p>
+
+            </div>
+
+            <div class="ornament-layout">
+
+                <div class="glass ornament-controls">
+
+                    <h3>
+                        🎨 Баптаулар
+                    </h3>
+
+                    <div class="control-row">
+
+                        <label>
+                            Негізгі түс
+                            <br>
+
+                            <input
+                                type="color"
+                                id="ornamentColor"
+                                class="color-input"
+                                value="#dcae58"
+                            >
+                        </label>
+
+                        <label>
+                            Фон
+                            <br>
+
+                            <input
+                                type="color"
+                                id="ornamentBg"
+                                class="color-input"
+                                value="#102238"
+                            >
+                        </label>
+
+                    </div>
+
+                    <div class="control-row">
+
+                        <button
+                            class="btn btn-primary"
+                            id="newOrnament"
+                        >
+                            ✨ Жаңа ою
+                        </button>
+
+                        <button
+                            class="btn btn-secondary"
+                            id="downloadOrnament"
+                        >
+                            ⬇️ PNG сақтау
+                        </button>
+
+                    </div>
+
+                    <p class="section-desc">
+                        Әр басқанда жаңа геометриялық өрнек
+                        генерацияланады.
+                    </p>
+
+                </div>
+
+                <div class="glass canvas-box">
+
+                    <canvas
+                        id="ornamentCanvas"
+                        width="600"
+                        height="400"
+                    ></canvas>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ======================================================
+     GAME
+====================================================== -->
+
+<section
+    class="page"
+    id="game"
+    data-page="game"
+>
+
+    <div class="section">
+
+        <div class="container">
+
+            <div class="section-header reveal">
+
+                <div class="eyebrow">
+                    ИНТЕРАКТИВ
+                </div>
+
+                <h2 class="section-title">
+                    Дала ойыны
+                </h2>
+
+                <p class="section-desc">
+                    Біліміңді тексер, киіз үйді құрастыр
+                    және домбырада ойнап көр.
+                </p>
+
+            </div>
+
+            <div class="glass game-shell">
+
+                <div class="tabs">
+
+                    <button
+                        class="tab-button active"
+                        data-tab="quiz"
+                    >
+                        🧠 Викторина
+                    </button>
+
+                    <button
+                        class="tab-button"
+                        data-tab="yurtGame"
+                    >
+                        🏠 Киіз үй
+                    </button>
+
+                    <button
+                        class="tab-button"
+                        data-tab="dombraGame"
+                    >
+                        🎵 Домбыра
+                    </button>
+
+                </div>
+
+                <!-- QUIZ -->
+
+                <div
+                    class="tab active"
+                    id="quiz"
+                >
+
+                    <div id="quizBox">
+
+                        <div
+                            class="quiz-question"
+                            id="question"
+                        ></div>
+
+                        <div
+                            class="answers"
+                            id="answers"
+                        ></div>
+
+                        <div class="quiz-info">
+
+                            <span id="quizScore">
+                                Ұпай: 0
+                            </span>
+
+                            <span id="quizProgress">
+                                1 / 6
+                            </span>
+
+                            <button
+                                class="btn btn-primary"
+                                id="nextQuestion"
+                                disabled
+                            >
+                                Келесі →
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- YURT GAME -->
+
+                <div
+                    class="tab"
+                    id="yurtGame"
+                >
+
+                    <div class="yurt-game">
+
+                        <div
+                            class="glass yurt-preview"
+                        >
+
+                            <div class="build-yurt">
+
+                                <div
+                                    class="yurt-part kiiz"
+                                    data-part-view="kiiz"
+                                ></div>
+
+                                <div
+                                    class="yurt-part kerege"
+                                    data-part-view="kerege"
+                                ></div>
+
+                                <div
+                                    class="yurt-part uyk"
+                                    data-part-view="uyk"
+                                ></div>
+
+                                <div
+                                    class="yurt-part shanyrak"
+                                    data-part-view="shanyrak"
+                                ></div>
+
+                                <div
+                                    class="yurt-part esik"
+                                    data-part-view="esik"
+                                ></div>
+
+                            </div>
+
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Киіз үйді құрастыр
+                            </h3>
+
+                            <p class="section-desc">
+                                Барлық бес бөлікті таңда.
+                            </p>
+
+                            <div
+                                class="parts"
+                                style="margin-top:20px"
+                            >
+
+                                <button
+                                    class="part-btn"
+                                    data-part="kerege"
+                                >
+                                    🪵 Кереге
+                                    <span>○</span>
+                                </button>
+
+                                <button
+                                    class="part-btn"
+                                    data-part="uyk"
+                                >
+                                    🏹 Уық
+                                    <span>○</span>
+                                </button>
+
+                                <button
+                                    class="part-btn"
+                                    data-part="shanyrak"
+                                >
+                                    ☀️ Шаңырақ
+                                    <span>○</span>
+                                </button>
+
+                                <button
+                                    class="part-btn"
+                                    data-part="kiiz"
+                                >
+                                    🧶 Киіз
+                                    <span>○</span>
+                                </button>
+
+                                <button
+                                    class="part-btn"
+                                    data-part="esik"
+                                >
+                                    🚪 Есік
+                                    <span>○</span>
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- DOMBRA -->
+
+                <div
+                    class="tab"
+                    id="dombraGame"
+                >
+
+                    <div class="dombra">
+
+                        <h3>
+                            🎵 Домбырада ойнап көр
+                        </h3>
+
+                        <p class="section-desc"
+                           style="margin-left:auto;margin-right:auto">
+
+                            Ішектерге басып дыбыс шығар.
+                            «Күйді бастау» арқылы шағын әуенді
+                            тыңдай аласың.
+                        </p>
+
+                        <div class="dombra-body">
+
+                            <div class="neck"></div>
+
+                            <div class="body-dombra">
+
+                                <div class="strings">
+
+                                    <div
+                                        class="string"
+                                        data-note="293.66"
+                                    ></div>
+
+                                    <div
+                                        class="string"
+                                        data-note="329.63"
+                                    ></div>
+
+                                    <div
+                                        class="string"
+                                        data-note="392"
+                                    ></div>
+
+                                    <div
+                                        class="string"
+                                        data-note="440"
+                                    ></div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <button
+                            class="btn btn-primary"
+                            id="playMelody"
+                        >
+                            ▶️ Күйді бастау
+                        </button>
+
+                        <button
+                            class="btn btn-secondary"
+                            id="stopMelody"
+                        >
+                            ⏹ Тоқтату
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="achievements">
+
+                <div
+                    class="glass achievement"
+                    id="achievementQuiz"
+                >
+                    🧠
+                    <strong>
+                        Тарих білгірі
+                    </strong>
+
+                    <p class="section-desc">
+                        Викторинаны аяқта.
+                    </p>
+                </div>
+
+                <div
+                    class="glass achievement"
+                    id="achievementYurt"
+                >
+                    🏠
+                    <strong>
+                        Шаңырақ шебері
+                    </strong>
+
+                    <p class="section-desc">
+                        Киіз үйді толық құрастыр.
+                    </p>
+                </div>
+
+                <div
+                    class="glass achievement"
+                    id="achievementDombra"
+                >
+                    🎵
+                    <strong>
+                        Күйші
+                    </strong>
+
+                    <p class="section-desc">
+                        Домбырада әуен ойна.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+<!-- ======================================================
+     FOOTER
+====================================================== -->
+
+<footer>
+
+    <div class="container">
+
+        <p>
+            <strong>ДАЛА МҰРАСЫ</strong>
+        </p>
+
+        <p style="margin-top:10px">
+            Қазақ халқының тарихы мен мәдениетін
+            жаңа форматта танытуға арналған жоба.
+        </p>
+
+        <p style="margin-top:20px">
+            © <span id="year"></span>
+        </p>
+
+    </div>
+
+</footer>
+
+<!-- ======================================================
+     MODAL
+====================================================== -->
+
+<div
+    class="modal"
+    id="modal"
+>
+
+    <div class="modal-box">
+
+        <div class="modal-head">
+
+            <h2 id="modalTitle">
+                Ақпарат
+            </h2>
+
+            <button
+                class="close"
+                id="closeModal"
+            >
+                ×
+            </button>
+
+        </div>
+
+        <div
+            class="modal-content"
+            id="modalContent"
+        ></div>
+
+    </div>
+
+</div>
+
+<!-- ======================================================
+     TOAST
+====================================================== -->
+
+<div id="toastBox"></div>
+
+<script>
+/* =========================================================
+   GLOBAL HELPERS
+========================================================= */
+
+const $ = selector =>
+    document.querySelector(selector);
+
+const $$ = selector =>
+    [...document.querySelectorAll(selector)];
+
+const toastBox =
+    $("#toastBox");
+
+function toast(message){
+
+    const item =
+        document.createElement("div");
+
+    item.className = "toast";
+    item.textContent = message;
+
+    toastBox.appendChild(item);
+
+    setTimeout(() => {
+
+        item.style.opacity = "0";
+        item.style.transform =
+            "translateX(30px)";
+
+        setTimeout(
+            () => item.remove(),
+            300
+        );
+
+    }, 2800);
+}
+
+/* =========================================================
+   YEAR
+========================================================= */
+
+$("#year").textContent =
+    new Date().getFullYear();
+
+/* =========================================================
+   ROUTER
+========================================================= */
+
+const pages =
+    $$(".page");
+
+const routeButtons =
+    $$("[data-route]");
+
+function showPage(route, addHistory = true){
+
+    const target =
+        document.querySelector(
+            `.page[data-page="${route}"]`
+        );
+
+    if(!target){
+        route = "home";
+    }
+
+    pages.forEach(page => {
+
+        page.classList.toggle(
+            "active",
+            page.dataset.page === route
+        );
+
+    });
+
+    $$(".nav-link").forEach(btn => {
+
+        btn.classList.toggle(
+            "active",
+            btn.dataset.route === route
+        );
+
+    });
+
+    $("#navLinks").classList.remove("open");
+
+    if(addHistory){
+
+        history.pushState(
+            {route},
+            "",
+            "#" + route
+        );
+
+    }
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+    setTimeout(
+        observeReveals,
+        100
+    );
+}
+
+routeButtons.forEach(btn => {
+
+    btn.addEventListener(
+        "click",
+        event => {
+
+            event.preventDefault();
+
+            showPage(
+                btn.dataset.route
+            );
+
+        }
+    );
+
+});
+
+window.addEventListener(
+    "popstate",
+    () => {
+
+        const route =
+            location.hash.replace("#","") ||
+            "home";
+
+        showPage(
+            route,
+            false
+        );
+
+    }
+);
+
+const initialRoute =
+    location.hash.replace("#","") ||
+    "home";
+
+showPage(
+    initialRoute,
+    false
+);
+
+/* =========================================================
+   MOBILE MENU
+========================================================= */
+
+$("#burger").addEventListener(
+    "click",
+    () => {
+
+        $("#navLinks")
+            .classList.toggle("open");
+
+    }
+);
+
+/* =========================================================
+   THEME
+========================================================= */
+
+const savedTheme =
+    localStorage.getItem("dalaTheme");
+
+if(savedTheme === "light"){
+
+    document.body.classList.add("light");
+
+}
+
+function updateThemeButton(){
+
+    $("#themeBtn").textContent =
+        document.body.classList.contains("light")
+            ? "☀️"
+            : "🌙";
+
+}
+
+updateThemeButton();
+
+$("#themeBtn").addEventListener(
+    "click",
+    () => {
+
+        document.body.classList.toggle("light");
+
+        localStorage.setItem(
+            "dalaTheme",
+            document.body.classList.contains("light")
+                ? "light"
+                : "dark"
+        );
+
+        updateThemeButton();
+
+        toast(
+            document.body.classList.contains("light")
+                ? "☀️ Жарық режимі қосылды"
+                : "🌙 Қараңғы режимі қосылды"
+        );
+
+    }
+);
+
+/* =========================================================
+   SHARE
+========================================================= */
+
+async function fallbackCopy(text){
+
+    const textarea =
+        document.createElement("textarea");
+
+    textarea.value = text;
+
+    textarea.style.position =
+        "fixed";
+
+    textarea.style.opacity = "0";
+
+    document.body.appendChild(
+        textarea
+    );
+
+    textarea.select();
+
+    try{
+
+        document.execCommand("copy");
+
+        toast(
+            "🔗 Сілтеме көшірілді"
+        );
+
+    }catch{
+
+        toast(
+            "Сілтемені қолмен көшіріңіз"
+        );
+
+    }
+
+    textarea.remove();
+}
+
+$("#shareBtn").addEventListener(
+    "click",
+    async () => {
+
+        const data = {
+
+            title:
+                "Дала мұрасы",
+
+            text:
+                "Қазақ халқының интерактивті мұрасы",
+
+            url:
+                location.href
+
+        };
+
+        try{
+
+            if(
+                navigator.share
+            ){
+
+                await navigator.share(data);
+
+            }else{
+
+                await fallbackCopy(
+                    location.href
+                );
+
+            }
+
+        }catch(error){
+
+            if(
+                error &&
+                error.name ===
+                "AbortError"
+            ){
+
+                return;
+
+            }
+
+            await fallbackCopy(
+                location.href
+            );
+
+        }
+
+    }
+);
+
+/* =========================================================
+   FULLSCREEN
+========================================================= */
+
+document.addEventListener(
+    "dblclick",
+    async () => {
+
+        if(
+            !document.fullscreenElement
+        ){
+
+            try{
+
+                await document.documentElement
+                    .requestFullscreen();
+
+            }catch{}
+
+        }
+
+    }
+);
+
+/* =========================================================
+   RANDOM FACTS
+========================================================= */
+
+const facts = [
+
+    "🐎 Қазақ халқының мәдениетінде жылқы ерекше орын алған.",
+
+    "🏠 Киіз үй көшпелі өмір салтына ыңғайлы етіп жасалған.",
+
+    "🎵 Домбыра қазақтың ең танымал ұлттық аспаптарының бірі.",
+
+    "🦅 Қыран бейнесі еркіндік пен биіктікті білдіреді.",
+
+    "☀️ Шаңырақ отбасы мен бірліктің маңызды белгісі.",
+
+    "👑 Қазақ хандығының қалыптасу кезеңі XV ғасырдың ортасына жатады.",
+
+    "🧵 Қазақ ою-өрнектерінде табиғат пен тұрмысқа байланысты көптеген символдық мағына бар.",
+
+    "🤝 Қонақжайлық қазақ қоғамындағы маңызды әлеуметтік құндылықтардың бірі болған."
+
+];
+
+$("#factBtn").addEventListener(
+    "click",
+    () => {
+
+        const fact =
+            facts[
+                Math.floor(
+                    Math.random() *
+                    facts.length
+                )
+            ];
+
+        openModal(
+            "💡 Қызықты дерек",
+            `<p>${fact}</p>`
+        );
+
+    }
+);
+
+/* =========================================================
+   HISTORY FILTER
+========================================================= */
+
+const historyEvents =
+    $$(".event");
+
+$$(".filter").forEach(
+    button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                $$(".filter")
+                    .forEach(
+                        b =>
+                            b.classList.remove(
+                                "active"
+                            )
+                    );
+
+                button.classList.add(
+                    "active"
+                );
+
+                applyHistoryFilter();
+
+            }
+        );
+
+    }
+);
+
+$("#historySearch").addEventListener(
+    "input",
+    applyHistoryFilter
+);
+
+function applyHistoryFilter(){
+
+    const activeFilter =
+        $(".filter.active")?.dataset.era ||
+        "all";
+
+    const query =
+        $("#historySearch")
+            .value
+            .trim()
+            .toLowerCase();
+
+    historyEvents.forEach(
+        event => {
+
+            const era =
+                event.dataset.era;
+
+            const text =
+                event.dataset.search
+                .toLowerCase();
+
+            const matchesEra =
+                activeFilter === "all" ||
+                era === activeFilter;
+
+            const matchesSearch =
+                !query ||
+                text.includes(query);
+
+            event.style.display =
+                matchesEra &&
+                matchesSearch
+                    ? ""
+                    : "none";
+
+        }
+    );
+
+}
+
+/* =========================================================
+   MODAL CONTENT
+========================================================= */
+
+const modalData = {
+
+    saka: {
+
+        title:"🦅 Сақтар",
+
+        html:`
+            <p>
+                Сақтар — Еуразия даласында өмір сүрген
+                ежелгі көшпелі тайпалардың бірі.
+            </p>
+
+            <p>
+                Олардың мәдениетінде аң стилі ерекше
+                дамып, алтыннан жасалған көптеген
+                көркем бұйымдар сақталған.
+            </p>
+
+            <p>
+                Қазақстан аумағынан табылған
+                «Алтын адам» осы дәуірдің маңызды
+                археологиялық мұраларының бірі.
+            </p>
+        `
+
+    },
+
+    huns: {
+
+        title:"🐎 Ғұндар",
+
+        html:`
+            <p>
+                Ғұндар Еуразияның саяси тарихында
+                маңызды рөл атқарған көшпелі
+                бірлестіктердің бірі болды.
+            </p>
+
+            <p>
+                Олардың әскери мәдениеті мен
+                атты әскері кейінгі дала
+                өркениеттеріне ықпал етті.
+            </p>
+        `
+
+    },
+
+    turk: {
+
+        title:"🏔️ Түрік қағанаты",
+
+        html:`
+            <p>
+                552 жылы Түрік қағанаты құрылды.
+                Бұл түркі халықтарының ортақ
+                саяси тарихындағы маңызды кезең.
+            </p>
+
+            <p>
+                «Түрік» атауы осы кезеңнен бастап
+                кең тарихи-саяси мағынада қолданылды.
+            </p>
+        `
+
+    },
+
+    khanate: {
+
+        title:"👑 Қазақ хандығы",
+
+        html:`
+            <p>
+                Қазақ хандығының қалыптасуы
+                XV ғасырдың ортасында Керей мен
+                Жәнібек сұлтандардың есімдерімен
+                байланысты.
+            </p>
+
+            <p>
+                Қазақ хандығы қазақ халқының
+                мемлекеттік тарихындағы маңызды
+                кезеңге айналды.
+            </p>
+        `
+
+    },
+
+    independence: {
+
+        title:"🇰🇿 Тәуелсіз Қазақстан",
+
+        html:`
+            <p>
+                1991 жылғы 16 желтоқсанда Қазақстан
+                мемлекеттік тәуелсіздігін жариялады.
+            </p>
+
+            <p>
+                Тәуелсіздік еліміздің жаңа тарихи
+                даму кезеңінің басталуына жол ашты.
+            </p>
+        `
+
+    },
+
+    yurt: {
+
+        title:"🏠 Киіз үй",
+
+        html:`
+            <p>
+                Киіз үй — көшпелі өмір салтына
+                бейімделген дәстүрлі баспана.
+            </p>
+
+            <p>
+                Оның негізгі бөліктеріне кереге,
+                уық, шаңырақ және киіз жабындары
+                жатады.
+            </p>
+
+            <p>
+                Шаңырақ қазақ мәдениетінде отбасы,
+                ошақ және бірліктің символы ретінде
+                ерекше маңызға ие.
+            </p>
+        `
+
+    },
+
+    dombra: {
+
+        title:"🎵 Домбыра",
+
+        html:`
+            <p>
+                Домбыра — қазақ музыкалық мәдениетінің
+                маңызды аспаптарының бірі.
+            </p>
+
+            <p>
+                Домбыра арқылы күйлер, халық әндері
+                және музыкалық шығармалар орындалады.
+            </p>
+        `
+
+    },
+
+    eagle: {
+
+        title:"🦅 Қыран",
+
+        html:`
+            <p>
+                Қыран бейнесі қазақ дүниетанымында
+                еркіндік, батылдық және биік мақсат
+                идеяларымен байланысты.
+            </p>
+        `
+
+    },
+
+    ornament: {
+
+        title:"🧵 Ою-өрнек",
+
+        html:`
+            <p>
+                Ою-өрнек — қазақтың қолданбалы өнерінің
+                маңызды бөлігі.
+            </p>
+
+            <p>
+                Өрнектерде жануарлар, өсімдіктер,
+                табиғат және геометриялық пішіндер
+                негізіндегі композициялар кездеседі.
+            </p>
+        `
+
+    },
+
+    horse: {
+
+        title:"🐎 Ат мәдениеті",
+
+        html:`
+            <p>
+                Жылқы қазақтың тұрмысымен, көшпелі
+                шаруашылығымен және мәдениетімен
+                тығыз байланысты болды.
+            </p>
+        `
+
+    },
+
+    hospitality: {
+
+        title:"🤝 Қонақжайлық",
+
+        html:`
+            <p>
+                Қонақты құрметтеу, үлкенді сыйлау,
+                дастарқан жаю және өзара көмек көрсету
+                қазақ қоғамындағы маңызды құндылықтар.
+            </p>
+        `
+
+    }
+
+};
+
+function openModal(
+    title,
+    html
+){
+
+    $("#modalTitle").textContent =
+        title;
+
+    $("#modalContent").innerHTML =
+        html;
+
+    $("#modal").classList.add(
+        "open"
+    );
+
+    document.body.style.overflow =
+        "hidden";
+
+}
+
+function closeModal(){
+
+    $("#modal").classList.remove(
+        "open"
+    );
+
+    document.body.style.overflow =
+        "";
+
+}
+
+$$("[data-modal]").forEach(
+    button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                const key =
+                    button.dataset.modal;
+
+                const data =
+                    modalData[key];
+
+                if(data){
+
+                    openModal(
+                        data.title,
+                        data.html
+                    );
+
+                }
+
+            }
+        );
+
+    }
+);
+
+$("#closeModal").addEventListener(
+    "click",
+    closeModal
+);
+
+$("#modal").addEventListener(
+    "click",
+    event => {
+
+        if(
+            event.target ===
+            $("#modal")
+        ){
+
+            closeModal();
+
+        }
+
+    }
+);
+
+/* =========================================================
+   ORNAMENT GENERATOR
+========================================================= */
+
+const ornamentCanvas =
+    $("#ornamentCanvas");
+
+const ornamentCtx =
+    ornamentCanvas.getContext("2d");
+
+function drawOrnament(
+    notify = false
+){
+
+    const color =
+        $("#ornamentColor").value;
+
+    const bg =
+        $("#ornamentBg").value;
+
+    const w =
+        ornamentCanvas.width;
+
+    const h =
+        ornamentCanvas.height;
+
+    ornamentCtx.fillStyle =
+        bg;
+
+    ornamentCtx.fillRect(
+        0,
+        0,
+        w,
+        h
+    );
+
+    ornamentCtx.strokeStyle =
+        color;
+
+    ornamentCtx.fillStyle =
+        color;
+
+    ornamentCtx.lineWidth = 5;
+
+    const centerX =
+        w / 2;
+
+    const centerY =
+        h / 2;
+
+    for(
+        let i = 0;
+        i < 15;
+        i++
+    ){
+
+        const x =
+            Math.random() * w;
+
+        const y =
+            Math.random() * h;
+
+        const size =
+            15 +
+            Math.random() * 45;
+
+        ornamentCtx.save();
+
+        ornamentCtx.translate(
+            x,
+            y
+        );
+
+        ornamentCtx.rotate(
+            Math.random() *
+            Math.PI
+        );
+
+        ornamentCtx.beginPath();
+
+        ornamentCtx.moveTo(
+            -size,
+            0
+        );
+
+        ornamentCtx.quadraticCurveTo(
+            0,
+            -size,
+            size,
+            0
+        );
+
+        ornamentCtx.quadraticCurveTo(
+            0,
+            size,
+            -size,
+            0
+        );
+
+        ornamentCtx.stroke();
+
+        ornamentCtx.restore();
+
+    }
+
+    /* central pattern */
+
+    ornamentCtx.lineWidth = 7;
+
+    for(
+        let i = 0;
+        i < 8;
+        i++
+    ){
+
+        const angle =
+            (Math.PI * 2 / 8) *
+            i;
+
+        const x =
+            centerX +
+            Math.cos(angle) * 95;
+
+        const y =
+            centerY +
+            Math.sin(angle) * 95;
+
+        ornamentCtx.beginPath();
+
+        ornamentCtx.arc(
+            x,
+            y,
+            30,
+            0,
+            Math.PI * 2
+        );
+
+        ornamentCtx.stroke();
+
+    }
+
+    ornamentCtx.beginPath();
+
+    ornamentCtx.arc(
+        centerX,
+        centerY,
+        55,
+        0,
+        Math.PI * 2
+    );
+
+    ornamentCtx.stroke();
+
+    if(notify){
+
+        toast(
+            "✨ Жаңа ою дайын!"
+        );
+
+    }
+
+}
+
+drawOrnament();
+
+$("#newOrnament").addEventListener(
+    "click",
+    () => drawOrnament(true)
+);
+
+$("#ornamentColor").addEventListener(
+    "input",
+    () => drawOrnament(false)
+);
+
+$("#ornamentBg").addEventListener(
+    "input",
+    () => drawOrnament(false)
+);
+
+$("#downloadOrnament").addEventListener(
+    "click",
+    () => {
+
+        const link =
+            document.createElement("a");
+
+        link.download =
+            "dala-ornek.png";
+
+        link.href =
+            ornamentCanvas.toDataURL(
+                "image/png"
+            );
+
+        link.click();
+
+        toast(
+            "⬇️ Ою PNG ретінде сақталды"
+        );
+
+    }
+);
+
+/* =========================================================
+   GAME TABS
+========================================================= */
+
+$$(".tab-button").forEach(
+    button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                $$(".tab-button")
+                    .forEach(
+                        b =>
+                            b.classList.remove(
+                                "active"
+                            )
+                    );
+
+                $$(".tab")
+                    .forEach(
+                        tab =>
+                            tab.classList.remove(
+                                "active"
+                            )
+                    );
+
+                button.classList.add(
+                    "active"
+                );
+
+                const tab =
+                    document.getElementById(
+                        button.dataset.tab
+                    );
+
+                tab.classList.add(
+                    "active"
+                );
+
+            }
+        );
+
+    }
+);
+
+/* =========================================================
+   QUIZ
+========================================================= */
+
+const questions = [
+
+    {
+        q:"Қазақ хандығының қалыптасу кезеңі қай ғасырда басталды?",
+        answers:[
+            "X ғасыр",
+            "XIII ғасыр",
+            "XV ғасыр",
+            "XVIII ғасыр"
+        ],
+        correct:2
+    },
+
+    {
+        q:"Қазақтың ұлттық музыкалық аспабы?",
+        answers:[
+            "Домбыра",
+            "Фортепиано",
+            "Скрипка",
+            "Арфа"
+        ],
+        correct:0
+    },
+
+    {
+        q:"Киіз үйдің жоғарғы дөңгелек бөлігі қалай аталады?",
+        answers:[
+            "Кереге",
+            "Шаңырақ",
+            "Уық",
+            "Туырлық"
+        ],
+        correct:1
+    },
+
+    {
+        q:"Қыран көбіне нені білдіреді?",
+        answers:[
+            "Еркіндік",
+            "Ұйқы",
+            "Сауда",
+            "Егіншілік"
+        ],
+        correct:0
+    },
+
+    {
+        q:"Қазақтың дәстүрлі баспанасы?",
+        answers:[
+            "Пәтер",
+            "Киіз үй",
+            "Қамал",
+            "Сарай"
+        ],
+        correct:1
+    },
+
+    {
+        q:"Қазақстан тәуелсіздігін қай жылы жариялады?",
+        answers:[
+            "1986",
+            "1990",
+            "1991",
+            "1995"
+        ],
+        correct:2
+    }
+
+];
+
+let currentQuestion = 0;
+let score = 0;
+let answered = false;
+
+function renderQuestion(){
+
+    if(
+        currentQuestion >=
+        questions.length
+    ){
+
+        finishQuiz();
+
+        return;
+
+    }
+
+    const q =
+        questions[currentQuestion];
+
+    $("#question").textContent =
+        q.q;
+
+    $("#quizProgress").textContent =
+        `${currentQuestion + 1} / ${questions.length}`;
+
+    $("#quizScore").textContent =
+        `Ұпай: ${score}`;
+
+    const box =
+        $("#answers");
+
+    box.innerHTML = "";
+
+    answered = false;
+
+    $("#nextQuestion").disabled =
+        true;
+
+    q.answers.forEach(
+        (answer,index) => {
+
+            const button =
+                document.createElement(
+                    "button"
+                );
+
+            button.className =
+                "answer";
+
+            button.textContent =
+                answer;
+
+            button.addEventListener(
+                "click",
+                () =>
+                    chooseAnswer(
+                        button,
+                        index
+                    )
+            );
+
+            box.appendChild(
+                button
+            );
+
+        }
+    );
+
+}
+
+function chooseAnswer(
+    button,
+    index
+){
+
+    if(answered){
+        return;
+    }
+
+    answered = true;
+
+    const q =
+        questions[currentQuestion];
+
+    const all =
+        $$(".answer");
+
+    all.forEach(
+        (answer, i) => {
+
+            if(
+                i === q.correct
+            ){
+
+                answer.classList.add(
+                    "correct"
+                );
+
+            }
+
+        }
+    );
+
+    if(
+        index === q.correct
+    ){
+
+        score++;
+
+        button.classList.add(
+            "correct"
+        );
+
+        toast(
+            "✅ Дұрыс жауап!"
+        );
+
+    }else{
+
+        button.classList.add(
+            "wrong"
+        );
+
+        toast(
+            "❌ Бұл жолы қате"
+        );
+
+    }
+
+    $("#quizScore").textContent =
+        `Ұпай: ${score}`;
+
+    $("#nextQuestion").disabled =
+        false;
+
+}
+
+$("#nextQuestion").addEventListener(
+    "click",
+    () => {
+
+        if(!answered){
+            return;
+        }
+
+        currentQuestion++;
+
+        renderQuestion();
+
+    }
+);
+
+function finishQuiz(){
+
+    const percentage =
+        Math.round(
+            score /
+            questions.length *
+            100
+        );
+
+    $("#question").innerHTML =
+        `
+        🎉 Викторина аяқталды!
+        <br>
+        <span style="
+            color:var(--gold2);
+            font-size:36px;
+        ">
+            ${score}/${questions.length}
+        </span>
+        <br>
+        ${percentage}% нәтиже
+        `;
+
+    $("#answers").innerHTML =
+        `
+        <div class="glass"
+             style="padding:25px;text-align:center">
+
+            ${
+                score >= 5
+                    ? "🏆 Керемет! Сен — дала тарихын жақсы білесің!"
+                    : score >= 3
+                    ? "👏 Жақсы нәтиже! Тағы біраз зерттеп көр."
+                    : "📚 Тарихты тағы бір зерттеп көр!"
+            }
+
+        </div>
+        `;
+
+    $("#nextQuestion").textContent =
+        "Қайта бастау";
+
+    $("#nextQuestion").disabled =
+        false;
+
+    $("#nextQuestion").onclick =
+        restartQuiz;
+
+    if(score >= 4){
+
+        unlock(
+            "achievementQuiz"
+        );
+
+    }
+
+}
+
+function restartQuiz(){
+
+    currentQuestion = 0;
+    score = 0;
+
+    $("#nextQuestion").textContent =
+        "Келесі →";
+
+    $("#nextQuestion").onclick =
+        () => {
+
+            if(!answered) return;
+
+            currentQuestion++;
+
+            renderQuestion();
+
+        };
+
+    renderQuestion();
+
+}
+
+renderQuestion();
+
+/* =========================================================
+   YURT GAME
+========================================================= */
+
+const selectedParts =
+    new Set();
+
+$$(".part-btn").forEach(
+    button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                const part =
+                    button.dataset.part;
+
+                if(
+                    selectedParts.has(part)
+                ){
+
+                    selectedParts.delete(
+                        part
+                    );
+
+                    button.classList.remove(
+                        "selected"
+                    );
+
+                    button.lastElementChild
+                        .textContent = "○";
+
+                }else{
+
+                    selectedParts.add(
+                        part
+                    );
+
+                    button.classList.add(
+                        "selected"
+                    );
+
+                    button.lastElementChild
+                        .textContent = "✓";
+
+                    playNote(
+                        220 +
+                        selectedParts.size *
+                        60,
+                        .12
+                    );
+
+                }
+
+                updateYurt();
+
+            }
+        );
+
+    }
+);
+
+function updateYurt(){
+
+    $$(".yurt-part")
+        .forEach(
+            element => {
+
+                const part =
+                    element.dataset.partView;
+
+                element.classList.toggle(
+                    "show",
+                    selectedParts.has(part)
+                );
+
+            }
+        );
+
+    if(
+        selectedParts.size === 5
+    ){
+
+        unlock(
+            "achievementYurt"
+        );
+
+        confetti();
+
+        toast(
+            "🏠 Киіз үй толық құрастырылды!"
+        );
+
+    }
+
+}
+
+/* =========================================================
+   AUDIO ENGINE
+========================================================= */
+
+let audioContext = null;
+
+let masterGain = null;
+
+let musicTimer = null;
+
+let musicPlaying = false;
+
+function getAudioContext(){
+
+    if(!audioContext){
+
+        const AudioCtx =
+            window.AudioContext ||
+            window.webkitAudioContext;
+
+        if(!AudioCtx){
+
+            toast(
+                "Бұл браузер дыбысты қолдамайды."
+            );
+
+            return null;
+
+        }
+
+        audioContext =
+            new AudioCtx();
+
+        masterGain =
+            audioContext.createGain();
+
+        masterGain.gain.value =
+            0.16;
+
+        masterGain.connect(
+            audioContext.destination
+        );
+
+    }
+
+    if(
+        audioContext.state ===
+        "suspended"
+    ){
+
+        audioContext.resume();
+
+    }
+
+    return audioContext;
+
+}
+
+function playNote(
+    frequency,
+    duration = .25,
+    type = "sine",
+    volume = .18
+){
+
+    const ctx =
+        getAudioContext();
+
+    if(!ctx){
+        return;
+    }
+
+    const oscillator =
+        ctx.createOscillator();
+
+    const gain =
+        ctx.createGain();
+
+    oscillator.type =
+        type;
+
+    oscillator.frequency.value =
+        frequency;
+
+    gain.gain.setValueAtTime(
+        0.0001,
+        ctx.currentTime
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+        volume,
+        ctx.currentTime + .02
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+        0.0001,
+        ctx.currentTime + duration
+    );
+
+    oscillator.connect(gain);
+
+    gain.connect(masterGain);
+
+    oscillator.start();
+
+    oscillator.stop(
+        ctx.currentTime +
+        duration +
+        .03
+    );
+
+}
+
+/* alias */
+
+function note(
+    frequency,
+    duration = .25
+){
+
+    playNote(
+        frequency,
+        duration,
+        "triangle",
+        .15
+    );
+
+}
+
+/* =========================================================
+   BACKGROUND KAZAKH-STYLE ATMOSPHERIC MUSIC
+========================================================= */
+
+const melody = [
+
+    196,
+    220,
+    261.63,
+    293.66,
+    329.63,
+    293.66,
+    261.63,
+    220,
+
+    196,
+    220,
+    246.94,
+    293.66,
+    329.63,
+    392,
+    329.63,
+    293.66
+];
+
+let melodyIndex = 0;
+
+function musicTick(){
+
+    if(!musicPlaying){
+        return;
+    }
+
+    const frequency =
+        melody[
+            melodyIndex %
+            melody.length
+        ];
+
+    playNote(
+        frequency,
+        .7,
+        "sine",
+        .045
+    );
+
+    /* soft fifth */
+
+    setTimeout(
+        () => {
+
+            if(
+                musicPlaying
+            ){
+
+                playNote(
+                    frequency * 1.5,
+                    .55,
+                    "sine",
+                    .018
+                );
+
+            }
+
+        },
+        120
+    );
+
+    melodyIndex++;
+
+    musicTimer =
+        setTimeout(
+            musicTick,
+            720
+        );
+
+}
+
+function startMusic(){
+
+    getAudioContext();
+
+    musicPlaying = true;
+
+    melodyIndex = 0;
+
+    $("#musicBtn").textContent =
+        "🔊";
+
+    localStorage.setItem(
+        "dalaMusic",
+        "on"
+    );
+
+    if(!musicTimer){
+
+        musicTick();
+
+    }
+
+    toast(
+        "🎵 Дала әуені қосылды"
+    );
+
+}
+
+function stopMusic(){
+
+    musicPlaying = false;
+
+    clearTimeout(
+        musicTimer
+    );
+
+    musicTimer = null;
+
+    $("#musicBtn").textContent =
+        "🔇";
+
+    localStorage.setItem(
+        "dalaMusic",
+        "off"
+    );
+
+    toast(
+        "🔇 Музыка өшірілді"
+    );
+
+}
+
+$("#musicBtn").addEventListener(
+    "click",
+    () => {
+
+        if(musicPlaying){
+
+            stopMusic();
+
+        }else{
+
+            startMusic();
+
+        }
+
+    }
+);
+
+/* =========================================================
+   AUTO START MUSIC AFTER FIRST USER ACTION
+========================================================= */
+
+let firstInteraction =
+    true;
+
+function firstUserInteraction(){
+
+    if(!firstInteraction){
+        return;
+    }
+
+    firstInteraction = false;
+
+    const saved =
+        localStorage.getItem(
+            "dalaMusic"
+        );
+
+    if(saved === "on"){
+
+        startMusic();
+
+    }
+
+}
+
+document.addEventListener(
+    "click",
+    firstUserInteraction,
+    {
+        once:true
+    }
+);
+
+/* =========================================================
+   DOMBRA STRINGS
+========================================================= */
+
+$$(".string").forEach(
+    string => {
+
+        string.addEventListener(
+            "click",
+            () => {
+
+                const frequency =
+                    Number(
+                        string.dataset.note
+                    );
+
+                note(
+                    frequency,
+                    .5
+                );
+
+                unlock(
+                    "achievementDombra"
+                );
+
+                string.animate(
+                    [
+                        {
+                            transform:
+                                "scaleX(3)"
+                        },
+                        {
+                            transform:
+                                "scaleX(1)"
+                        }
+                    ],
+                    {
+                        duration:250
+                    }
+                );
+
+            }
+        );
+
+    }
+);
+
+/* =========================================================
+   DOMBRA MELODY
+========================================================= */
+
+let melodyInterval = null;
+
+const dombraMelody = [
+
+    293.66,
+    329.63,
+    392,
+    440,
+    392,
+    329.63,
+    293.66,
+    261.63,
+
+    293.66,
+    329.63,
+    392,
+    329.63,
+    293.66
+
+];
+
+$("#playMelody").addEventListener(
+    "click",
+    () => {
+
+        stopDombraMelody();
+
+        let i = 0;
+
+        getAudioContext();
+
+        melodyInterval =
+            setInterval(
+                () => {
+
+                    if(
+                        i >=
+                        dombraMelody.length
+                    ){
+
+                        stopDombraMelody();
+
+                        return;
+
+                    }
+
+                    note(
+                        dombraMelody[i],
+                        .45
+                    );
+
+                    i++;
+
+                },
+                430
+            );
+
+        unlock(
+            "achievementDombra"
+        );
+
+        toast(
+            "🎵 Күй орындалып жатыр"
+        );
+
+    }
+);
+
+$("#stopMelody").addEventListener(
+    "click",
+    stopDombraMelody
+);
+
+function stopDombraMelody(){
+
+    if(melodyInterval){
+
+        clearInterval(
+            melodyInterval
+        );
+
+        melodyInterval = null;
+
+    }
+
+}
+
+/* =========================================================
+   ACHIEVEMENTS
+========================================================= */
+
+function unlock(id){
+
+    const element =
+        document.getElementById(id);
+
+    if(!element){
+        return;
+    }
+
+    if(
+        !element.classList.contains(
+            "unlocked"
+        )
+    ){
+
+        element.classList.add(
+            "unlocked"
+        );
+
+        toast(
+            "🏆 Жетістік ашылды!"
+        );
+
+        confetti();
+
+    }
+
+}
+
+/* =========================================================
+   CONFETTI
+========================================================= */
+
+function confetti(){
+
+    const canvas =
+        document.createElement(
+            "canvas"
+        );
+
+    canvas.style.position =
+        "fixed";
+
+    canvas.style.inset = "0";
+
+    canvas.style.width = "100%";
+    canvas.style.height = "100%";
+
+    canvas.style.pointerEvents =
+        "none";
+
+    canvas.style.zIndex =
+        "9998";
+
+    document.body.appendChild(
+        canvas
+    );
+
+    const ctx =
+        canvas.getContext("2d");
+
+    canvas.width =
+        innerWidth;
+
+    canvas.height =
+        innerHeight;
+
+    const pieces =
+        [];
+
+    for(
+        let i=0;
+        i<100;
+        i++
+    ){
+
+        pieces.push({
+
+            x:
+                Math.random() *
+                canvas.width,
+
+            y:
+                -20,
+
+            size:
+                5 +
+                Math.random()*8,
+
+            speed:
+                2 +
+                Math.random()*5,
+
+            rotation:
+                Math.random()*Math.PI,
+
+            color:
+                [
+                    "#dcae58",
+                    "#f0cf82",
+                    "#78b89b",
+                    "#9bc4df",
+                    "#ffffff"
+                ][
+                    Math.floor(
+                        Math.random()*5
+                    )
+                ]
+
+        });
+
+    }
+
+    let frames = 0;
+
+    function animate(){
+
+        ctx.clearRect(
+            0,
+            0,
+            canvas.width,
+            canvas.height
+        );
+
+        pieces.forEach(
+            p => {
+
+                p.y +=
+                    p.speed;
+
+                p.rotation += .05;
+
+                ctx.save();
+
+                ctx.translate(
+                    p.x,
+                    p.y
+                );
+
+                ctx.rotate(
+                    p.rotation
+                );
+
+                ctx.fillStyle =
+                    p.color;
+
+                ctx.fillRect(
+                    -p.size/2,
+                    -p.size/2,
+                    p.size,
+                    p.size
+                );
+
+                ctx.restore();
+
+            }
+        );
+
+        frames++;
+
+        if(frames < 130){
+
+            requestAnimationFrame(
+                animate
+            );
+
+        }else{
+
+            canvas.remove();
+
+        }
+
+    }
+
+    animate();
+
+}
+
+/* =========================================================
+   SCROLL PROGRESS
+========================================================= */
+
+window.addEventListener(
+    "scroll",
+    () => {
+
+        const scrollTop =
+            window.scrollY;
+
+        const height =
+            document.documentElement
+                .scrollHeight -
+            window.innerHeight;
+
+        const progress =
+            height > 0
+                ? scrollTop / height * 100
+                : 0;
+
+        $("#progress").style.width =
+            progress + "%";
+
+    }
+);
+
+/* =========================================================
+   REVEAL ON SCROLL
+========================================================= */
+
+let revealObserver;
+
+function observeReveals(){
+
+    if(revealObserver){
+
+        revealObserver.disconnect();
+
+    }
+
+    revealObserver =
+        new IntersectionObserver(
+            entries => {
+
+                entries.forEach(
+                    entry => {
+
+                        if(
+                            entry.isIntersecting
+                        ){
+
+                            entry.target
+                                .classList
+                                .add("in");
+
+                        }
+
+                    }
+                );
+
+            },
+            {
+                threshold:.08
+            }
+        );
+
+    $$(".reveal:not(.in)")
+        .forEach(
+            element =>
+                revealObserver.observe(
+                    element
+                )
+        );
+
+}
+
+observeReveals();
+
+/* =========================================================
+   PARTICLES
+========================================================= */
+
+const particleCanvas =
+    $("#particles");
+
+const particleCtx =
+    particleCanvas.getContext("2d");
+
+let particleList = [];
+
+function resizeParticles(){
+
+    particleCanvas.width =
+        innerWidth;
+
+    particleCanvas.height =
+        innerHeight;
+
+}
+
+function createParticles(){
+
+    particleList = [];
+
+    const count =
+        Math.min(
+            80,
+            Math.floor(
+                innerWidth / 15
+            )
+        );
+
+    for(
+        let i=0;
+        i<count;
+        i++
+    ){
+
+        particleList.push({
+
+            x:
+                Math.random() *
+                innerWidth,
+
+            y:
+                Math.random() *
+                innerHeight,
+
+            r:
+                Math.random() *
+                2 + 1,
+
+            speed:
+                Math.random() *
+                .4 + .1,
+
+            alpha:
+                Math.random() *
+                .5 + .15
+
+        });
+
+    }
+
+}
+
+function animateParticles(){
+
+    particleCtx.clearRect(
+        0,
+        0,
+        particleCanvas.width,
+        particleCanvas.height
+    );
+
+    particleList.forEach(
+        p => {
+
+            p.y -= p.speed;
+
+            if(
+                p.y < -10
+            ){
+
+                p.y =
+                    innerHeight + 10;
+
+            }
+
+            particleCtx.beginPath();
+
+            particleCtx.arc(
+                p.x,
+                p.y,
+                p.r,
+                0,
+                Math.PI*2
+            );
+
+            particleCtx.fillStyle =
+                `rgba(220,174,88,${p.alpha})`;
+
+            particleCtx.fill();
+
+        }
+    );
+
+    requestAnimationFrame(
+        animateParticles
+    );
+
+}
+
+resizeParticles();
+
+createParticles();
+
+animateParticles();
+
+window.addEventListener(
+    "resize",
+    () => {
+
+        resizeParticles();
+        createParticles();
+
+    }
+);
+
+/* =========================================================
+   CURSOR GLOW
+========================================================= */
+
+document.addEventListener(
+    "mousemove",
+    event => {
+
+        document.documentElement
+            .style
+            .setProperty(
+                "--mouse-x",
+                event.clientX + "px"
+            );
+
+        document.documentElement
+            .style
+            .setProperty(
+                "--mouse-y",
+                event.clientY + "px"
+            );
+
+    }
+);
+
+/* =========================================================
+   KEYBOARD SHORTCUTS
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if(
+            event.key === "Escape"
+        ){
+
+            closeModal();
+
+        }
+
+        if(
+            event.key === "ArrowRight"
+        ){
+
+            const tabs =
+                $$(".tab-button");
+
+            const active =
+                $(".tab-button.active");
+
+            if(active){
+
+                const index =
+                    tabs.indexOf(active);
+
+                const next =
+                    tabs[
+                        (index + 1) %
+                        tabs.length
+                    ];
+
+                next.click();
+
+            }
+
+        }
+
+        if(
+            event.key === "ArrowLeft"
+        ){
+
+            const tabs =
+                $$(".tab-button");
+
+            const active =
+                $(".tab-button.active");
+
+            if(active){
+
+                const index =
+                    tabs.indexOf(active);
+
+                const previous =
+                    tabs[
+                        (index - 1 +
+                            tabs.length) %
+                        tabs.length
+                    ];
+
+                previous.click();
+
+            }
+
+        }
+
+    }
+);
+
+/* =========================================================
+   FIRST LOAD
+========================================================= */
+
+setTimeout(
+    () => {
+
+        $$(".reveal").forEach(
+            (element,index) => {
+
+                if(
+                    index < 4
+                ){
+
+                    setTimeout(
+                        () =>
+                            element.classList.add(
+                                "in"
+                            ),
+                        index * 100
+                    );
+
+                }
+
+            }
+        );
+
+    },
+    200
+);
+
+console.log(
+    "🇰🇿 Дала мұрасы іске қосылды!"
+);
+
+</script>
+
+</body>
+</html>
